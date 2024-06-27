@@ -1,0 +1,31 @@
+{
+  "user": [],
+  "athelete": [
+    {
+      "id": "oNkdG79mQhX9ZDbPbkz2UNZJd2b2",
+      "name": "Elena",
+      "lastname": "KOLDASHOVA",
+      "email": "ekold@mail.ru",
+      "password": "123456",
+      "age": 40,
+      "roles": "athelete",
+      "gender": "female",
+      "date": "2024-06-27T13:32:06.912Z",
+      "auth": false
+    }
+  ],
+  "trener": [
+    {
+      "id": "VdGidPn0LDhcl9dEpm8IoNmmWLn2",
+      "name": "ALEXEY",
+      "lastname": "KOLDASHOV",
+      "email": "alex@mail.ru",
+      "password": "123456",
+      "age": 35,
+      "roles": "trener",
+      "gender": "male",
+      "date": "2024-06-27T13:32:54.602Z",
+      "auth": false
+    }
+  ]
+}

@@ -2,11 +2,20 @@ import React from 'react';
 import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
+import { useParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { getAthleteId, getUserId } from '../API/apiUser';
+
 
 type MenuItem = Required<MenuProps>['items'][number];
 
 export default function UserClient () {
+  let { userId } = useParams();
+ 
+  // const {data, isSuccess, isPending, isError} = useQuery({queryKey: ['user'], queryFn: ()=>getUserId(userId)})
 
+  const {data, isSuccess, isPending, isError} = useQuery({queryKey: ['athlete'], queryFn: ()=>getAthleteId(userId)})
+  
     const items: MenuItem[] = [
         {
           key: 'sub1',
@@ -41,7 +50,26 @@ export default function UserClient () {
 
         console.log('click', e);
       };
+
+
+      
 return<>
- <Menu onClick={onClick} style={{ width: 200, height: 1000 }} mode="vertical" items={items}/>
+{ 
+isPending ? <p>loading</p>
+:
+isError ? <p>что то пошло не так</p>
+:
+<div style={{display:'flex'}}>
+<Menu onClick={onClick} style={{ width: 200, height: 1000 }} mode="vertical" items={items}/>
+эта страница открывается для авторизованного пользователя
+{
+    data && <>
+    <p>{data.name}</p>
+    <p>{data.date}</p>
+    </>
+}
+</div>
+
+}
 </>
 }

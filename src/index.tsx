@@ -4,8 +4,11 @@ import './index.css';
 import App from './App';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import Client from './page/UserClient';
-import Trener from './page/UserTrener';
+import './firebase';
+import Home from './page/Home';
+import ErrorPage from './page/error-page';
+import AthletePage from './page/AthletePage';
+import TrenerPage from './page/TrenerPage';
 
 
 const queryClient = new QueryClient()
@@ -14,14 +17,19 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <App/>,
+    errorElement: <ErrorPage/>,
     children: [
       {
-        path: '/client',
-        element: <Client/>,
+        path: '/home',
+        element: <Home/>,
       },
       {
-        path: '/trener',
-        element: <Trener/>,
+        path: '/trener/:userId',
+        element: <TrenerPage/>,
+      },
+      {
+        path: '/athelete/:userId',
+        element: <AthletePage/>
       },
     ]
   }
@@ -36,7 +44,6 @@ root.render(
 <React.StrictMode>
     <RouterProvider router={router}/>
   </React.StrictMode>
-
   </QueryClientProvider>
   
 );

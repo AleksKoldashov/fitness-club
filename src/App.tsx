@@ -1,22 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css'
 import MenuTopBar from './components/App/Menutopbar';
-import {Outlet } from 'react-router-dom';
-
+import {Outlet, useNavigate} from 'react-router-dom';
 
 
 
 function App() {
-  
+
+const nav = useNavigate()
+useEffect(()=>{
+  nav('/home')
+},[nav])
+
   return (<>
   <div className="topbar">
      <MenuTopBar/>
   </div>
    <div className='app'>
       <Outlet/>
-    </div>
+  </div>
   </>
-   
   );
 }
 
