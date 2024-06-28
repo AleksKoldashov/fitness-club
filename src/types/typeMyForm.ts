@@ -13,6 +13,19 @@ export interface igender {
     disabled: boolean;
  }
 
+interface iMyAthlete {
+  id: string;
+    name: string;
+    lastname: string;
+    email: string;
+    password: string;
+    age: any;
+    roles: string;
+    gender:string,
+    date: any,
+    auth: boolean,
+}
+
 export  interface iobjReg  {
     id: string;
     name: string;
@@ -23,5 +36,6 @@ export  interface iobjReg  {
     roles: string;
     gender:string,
     date: any,
-    auth: boolean
+    auth: boolean,
+    myathlete: []
   }

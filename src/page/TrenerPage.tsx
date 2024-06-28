@@ -15,7 +15,7 @@ type MenuItem = Required<MenuProps>['items'][number];
 
 export default function TrenerPage () {
   let { userId } = useParams();
-  const {data,isPending, isError} = useQuery({queryKey: ['trener'], queryFn: ()=>getTrenerId(userId)})
+  const {data,isPending, isError, refetch} = useQuery({queryKey: ['trener'], queryFn: ()=>getTrenerId(userId)})
   const [page, setPage] = useState({list: false, schedule: false})
 
     const items: MenuItem[] = [
@@ -65,7 +65,7 @@ isError ? <p>что то пошло не так</p>
 }
    {
     page.list ?  
-    <ListAthlete/>
+    <ListAthlete data={data} refetch={refetch}/>
     :
     null
     }

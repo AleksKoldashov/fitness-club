@@ -12,6 +12,30 @@
       "gender": "female",
       "date": "2024-06-27T13:32:06.912Z",
       "auth": false
+    },
+    {
+      "id": "R24kX8ADVeQuSRezOtx5uLu39Qn1",
+      "name": "ben",
+      "lastname": "gur",
+      "email": "ben@mail.ru",
+      "password": "123456",
+      "age": 28,
+      "roles": "athelete",
+      "gender": "male",
+      "date": "2024-06-28T06:40:06.151Z",
+      "auth": false
+    },
+    {
+      "id": "fNJxaGfagNZkMi6IqeCITsvDsNr1",
+      "name": "bred",
+      "lastname": "pit",
+      "email": "bred@mail.ru",
+      "password": "123456",
+      "age": 50,
+      "roles": "athelete",
+      "gender": "male",
+      "date": "2024-06-28T06:41:10.877Z",
+      "auth": false
     }
   ],
   "trener": [
@@ -25,7 +49,14 @@
       "roles": "trener",
       "gender": "male",
       "date": "2024-06-27T13:32:54.602Z",
-      "auth": false
+      "auth": false,
+      "myathlete": [
+        {
+          "name": "ben",
+          "lastname": "gur",
+          "id": "R24kX8ADVeQuSRezOtx5uLu39Qn1"
+        }
+      ]
     }
   ]
 }

@@ -43,7 +43,8 @@ const optionSelect:igender [] = [
     roles: role,
     gender : '',
     date: new Date(),
-    auth: false
+    auth: false,
+    myathlete: []
  }
  const [suc, setSuc] = useState(false)
 const [value, setValue] = useState(objReg)
