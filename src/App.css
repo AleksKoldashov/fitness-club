@@ -24,3 +24,8 @@ body{
   border-top-right-radius: 12px;
 }
 
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 175px);
+  grid-template-rows: repeat(5, 150px);
+}

@@ -17,7 +17,8 @@ export default function TrenerPage () {
   let { userId } = useParams();
   const {data,isPending, isError, refetch} = useQuery({queryKey: ['trener'], queryFn: ()=>getTrenerId(userId)})
   const [page, setPage] = useState({list: false, schedule: false})
-
+  console.log(data);
+  
     const items: MenuItem[] = [
         {
           key: 'sub1',
@@ -56,7 +57,7 @@ isError ? <p>что то пошло не так</p>
 <div style={{display:'flex'}}>
 <Menu onClick={onClick} style={{ width: 200, height: 1000 }} mode="vertical" items={items}/>
 <div style={{width:'100%'}}>
-<h6>эта страница открывается для авторизованного пользователя</h6>
+<h5>эта страница открывается для авторизованного пользователя</h5>
 {
     data && <>
     <p>{data.name}</p>
