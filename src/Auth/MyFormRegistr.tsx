@@ -13,6 +13,7 @@ import { FieldType, igender} from '../types/typeMyForm';
 import { Idata } from '../types/typePage';
 import { addUserAthlete } from '../components/API/apiAthlete';
 import { addUserTrener } from '../components/API/apiTrener';
+import { app } from '../firebase';
 
 const formItemLayout = {
   labelCol: {
@@ -67,7 +68,7 @@ const addUser = useMutation({
 })
 
 const onSubmit=()=>{
-  const auth = getAuth();
+  const auth = getAuth(app);
   createUserWithEmailAndPassword(auth, value.email, value.password)
       .then(({user})=>{
           addUser.mutate({obj:value, uid: user.uid})
