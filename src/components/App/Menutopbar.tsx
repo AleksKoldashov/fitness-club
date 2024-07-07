@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { DownOutlined,} from '@ant-design/icons';
 import type { DropdownProps, MenuProps } from 'antd';
-import { Dropdown, Space, Menu, Button  } from 'antd';
+import { Dropdown, Space, Menu, Button, Avatar  } from 'antd';
 import { NavLink, useNavigate } from 'react-router-dom';
 import useModalForm from '../MyModals/useModalForm';
-
 
 export default function MenuTopBar () {
 
@@ -12,81 +11,74 @@ export default function MenuTopBar () {
   const nav = useNavigate()
   const [open, setOpen] = useState(false);
   const [current, setCurrent] = useState('mail');
- const pathProfil = localStorage.getItem('path') 
- const valid = pathProfil ? pathProfil : '/home'
+  const avatar = localStorage.getItem('avatar') 
+  const pathProfil = localStorage.getItem('path') 
+  const valid = pathProfil ? pathProfil : '/profil'
   const onClick: MenuProps['onClick'] = (e) => {
     setCurrent(e.key);
   };
 
-  const menuHeader = [
+const menuHeader = [
     {id:1, title: 'Главная', path: '/home'},
-    {id:2, title: 'профиль', path: `${valid}`},
-    {id:3, title: 'акции', path: '/'},
-    {id:4, title: 'Контакты'},
-    {id:5, title: 'Наша команда'},
+    {id:2, title: 'Профиль', path: `${valid}`},
+    {id:3, title: 'Акции', path: '/homepromo'},
+    {id:4, title: 'Наши тарифы', path: '/rates'},
+    {id:5, title: 'Наша команда', path: '/ourteam'},
+    {id:6, title: 'Контакты', path: '/contacts'},
   ]
-  const item = menuHeader.map(({id,title, path})=>{ 
+const item = menuHeader.map(({id,title, path})=>{ 
    return {
     label: <NavLink to={`${path}`}>{title}</NavLink>,
     key: id
           }
         })
- 
-  
-  const handleMenuClick: MenuProps['onClick'] = (e) => {
 
-  };
-
-
-
-  const handleOpenChange: DropdownProps['onOpenChange'] = (nextOpen, info) => {
+const handleOpenChange: DropdownProps['onOpenChange'] = (nextOpen, info) => {
     if (info.source === 'trigger' || nextOpen) {
       setOpen(nextOpen);
     }
   };
 
-let role = ''
-  const itemsPersonalArea: MenuProps['items'] = [
-    {
-      // label: <NavLink to={`/client`}>Клиент</NavLink>,
-      label: 'Клиент',
-      key: '1', 
-      onClick: ()=>{modal.showModal(role='athelete')}
-    },
-    {
-      // label: <NavLink to={`/trener`}>Тренер</NavLink>,
-      label: 'Тренер',
-      key: '2',
-      onClick: ()=>{modal.showModal(role='trener')}
-    },
-  ];
-    
-  const outProfil=()=>{
+const itemsPersonal = [
+  {id:1,label:'Спортсмен', role:'athelete'},
+  {id:2,label:'Тренер', role:'trener'},
+]
+ 
+const itemsPersonalArea = itemsPersonal.map(({id, label, role})=>({
+  key:`${id}`,
+  label,
+  onClick: ()=>{modal.showModal(role)}
+}))
+
+const outProfil=()=>{
     localStorage.clear()
     nav('/home')
-  }  
-    
-    
+  }    
     return<>
-    <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={item} style={{width:'500px'}}/>
+    <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={item} style={{width:'700px'}}/>
+    <div className='menu_in'>
+    {avatar ?  <Avatar shape="circle" src={avatar}/> : null}
      <Dropdown
       menu={{
         items: itemsPersonalArea,
-        onClick: handleMenuClick,
       }}
       onOpenChange={handleOpenChange}
       open={open}
     >
-      <a onClick={(e) => e.preventDefault()}>
-        <Space>
+      <a onClick={(e) => e.preventDefault()} href='#/'>
+        <Space
+        >
          Личный кабинет
           <DownOutlined />
         </Space>
       </a>
     </Dropdown>
-    <Button
+ 
+    <Button style={{marginTop: 5}}
     onClick={()=>{outProfil()}}
     >Выйти</Button>
+    </div>
+  
     {
       modal.modal()
     }

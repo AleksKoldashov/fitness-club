@@ -1,11 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import type { FormProps } from 'antd';
 import { Button, Checkbox, Form, Input } from 'antd';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { getUser, getUserId } from '../API/apiUser';
 import { useNavigate } from 'react-router-dom';
-
 
 type FieldType = {
   username?: string;
@@ -28,25 +25,15 @@ const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
 };
 
 export default function MyFormAuth ({role}:any) {
-  // const client = useQueryClient()
-  // const {data, isSuccess, isPending, isError} = useQuery({queryKey: ['user'], queryFn: ()=>getUserId(value.id)})
- 
-//  console.log('Auth', data);
- 
-  
+
   const objAuth: iobjAuth = {
     email: '',
     password: '',
     id: ''
   }  
-
 const [value, setValue] = useState(objAuth)
 
-
 const nav = useNavigate()
-
-const loadUser =(id:any)=>{
-}
 
 const login=()=>{
   const auth = getAuth();
@@ -58,8 +45,6 @@ const login=()=>{
   })
   .catch(console.error)
 }
-
-
 
   return  <Form
     name="basic"
@@ -95,13 +80,11 @@ const login=()=>{
     wrapperCol={{ offset: 8, span: 16 }}
     >
     <Checkbox>Запомнить меня</Checkbox>
-
     </Form.Item>
 
     <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
     <Button 
     type="primary" 
-    // htmlType="submit"
     onClick={()=>{login()}}
     >
     Войти

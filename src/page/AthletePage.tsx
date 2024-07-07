@@ -1,57 +1,35 @@
-import React from 'react';
-import { AppstoreOutlined, MailOutlined} from '@ant-design/icons';
-import type { MenuProps } from 'antd';
-import { Menu } from 'antd';
+import { AppstoreOutlined, MailOutlined, SettingOutlined} from '@ant-design/icons';
+import { Flex, Menu } from 'antd';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { getAthleteId } from '../components/API/apiUser';
+import MySchedule from '../components/my_schedule/MySchedule';
+import {  useState } from 'react';
+import MySetting from '../components/UserTrener/my_setting/MySetting';
+import { getAthleteId } from '../components/API/apiAthlete';
 
-
-
-type MenuItem = Required<MenuProps>['items'][number];
 
 export default function AthletePage () {
   let { userId } = useParams();
- const validator = userId ? userId : localStorage.getItem('iduser')
- console.log(validator)
- 
-  const {data,isPending, isError} = useQuery({queryKey: ['athlete'], queryFn: ()=>getAthleteId(userId)})
-  
-    const items: MenuItem[] = [
-        {
-          key: 'sub1',
-          icon: <MailOutlined />,
-          label: 'Акции',
-        
-        },
-        {
-          key: 'sub2',
-          icon: <AppstoreOutlined />,
-          label: 'Мое Расписание',
-        },
-        {
-          key: 'sub4',
-          label: 'Сообщения',
-          icon: <MailOutlined />,
-          danger:true
-        },
-        {
-            key: 'sub5',
-            label: 'Программы тренировок',
-            icon: <MailOutlined />,
-            onClick: ()=>{console.log('sub5');
-           }
-          },
-      ];
-      
-      const onClick: MenuProps['onClick'] = (e) => {
-        if(e.key ==='sub4'){
-            console.log('sub4');
-        }
 
-        console.log('click', e);
-      };
+ const {data,isPending, isError, refetch} = useQuery({queryKey: ['athlete'], queryFn: ()=>getAthleteId(userId)})
+ localStorage.setItem('avatar', `${data?.foto}`)
+const [page, setPage]=useState<number>()
 
+const arrMenu = [
+  {id:1, label: 'Сообщения', icon: <MailOutlined />, path: ''},
+  {id:2, label: 'Мое Расписание', icon: <AppstoreOutlined />, path: <MySchedule data={data}/>},
+  {id:3, label: 'Акции', icon: <MailOutlined />, path: ''},
+  {id:4, label: 'Программы тренировок', icon: <MailOutlined />, path: ''},
+  {id:5, label: 'Настройки', icon: <SettingOutlined />, path: <MySetting data={data} refetch={refetch}/>},
+]
+
+const items=arrMenu.map(({label, id, icon})=>({
+  key:`${id}`,
+  label,
+  icon,
+  onClick: ()=>{setPage(id)}
+})
+)
 
       
 return<>
@@ -60,17 +38,18 @@ isPending ? <p>loading</p>
 :
 isError ? <p>что то пошло не так</p>
 :
-<div style={{display:'flex'}}>
-<Menu onClick={onClick} style={{ width: 200, height: 1000 }} mode="vertical" items={items}/>
-эта страница открывается для авторизованного пользователя!
+<Flex>
+<Menu 
+style={{ width: 200, height: 1000 }} 
+mode="vertical" 
+items={items}/>
+<div>
+  эта страница открывается для авторизованного Спортсмена!
 {
-    data && <>
-    <p>{data.name}</p>
-    <p>{data.date}</p>
-    </>
+  arrMenu.map((item:any)=>item.id===page? <div key={item.id}>{item.path}</div>: null)
 }
 </div>
-
+</Flex>
 }
 </>
 }

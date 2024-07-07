@@ -1,84 +1,58 @@
 import React, { useState } from 'react';
-import { AppstoreOutlined, MailOutlined,} from '@ant-design/icons';
-import type { MenuProps } from 'antd';
-import { Menu } from 'antd';
+import { Flex, Menu,} from 'antd';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
-import { getTrenerId } from '../components/API/apiUser';
+import { AppstoreOutlined, MailOutlined, TeamOutlined, SettingOutlined } from '@ant-design/icons';
 import ListAthlete from '../components/UserTrener/list_athlete/ListAthlete';
-import MySchedule from '../components/UserTrener/my_schedule/MySchedule';
-
-
-type MenuItem = Required<MenuProps>['items'][number];
-
+import MySchedule from '../components/my_schedule/MySchedule';
+import MyMesseger from '../components/UserTrener/my_messeger/MyMesseger';
+import MySetting from '../components/UserTrener/my_setting/MySetting';
+import { getTrenerId } from '../components/API/apiTrener';
 
 
 export default function TrenerPage () {
   let { userId } = useParams();
-  const {data,isPending, isError, refetch} = useQuery({queryKey: ['trener'], queryFn: ()=>getTrenerId(userId)})
-  const [page, setPage] = useState({list: false, schedule: false})
-  console.log(data);
-  
-    const items: MenuItem[] = [
-        {
-          key: 'sub1',
-          icon: <MailOutlined />,
-          label: 'Список спортсменов',
-        
-        },
-        {
-          key: 'sub2',
-          icon: <AppstoreOutlined />,
-          label: 'Мое Расписание',
-        },
-        {
-          key: 'sub4',
-          label: 'Сообщения',
-          icon: <MailOutlined />,
-          danger:true
-        },
-      ];
-      
-      const onClick: MenuProps['onClick'] = (e) => {
-        if(e.key === 'sub1'){
-          setPage({list: true, schedule: false})
-        }else if(e.key==='sub2'){
-          setPage({list: false, schedule: true})
-        }
-        console.log('click', e);
 
-      };
+  const {data,isPending, isError, refetch} = useQuery({
+    queryKey: ['trener'], 
+    queryFn: ()=>getTrenerId(userId)})
+
+localStorage.setItem('avatar', `${data?.foto}`)
+  const [page, setPage] = useState<number>(2)
+
+const arrMenu=[
+  {id:1, label: 'Список спортсменов', icon: <TeamOutlined/>, path: <ListAthlete data={data} refetch={refetch}/>},
+  {id:2, label: 'Мое Расписание', icon: <AppstoreOutlined />, path: <MySchedule data={data}/>},
+  {id:3, label: 'Сообщения', icon: <MailOutlined />, path: <MyMesseger/>},
+  {id:4, label: 'Настройки', icon: <SettingOutlined />, path: <MySetting data={data} refetch={refetch}/>},
+]
+
+const items=arrMenu.map(({label, id, icon})=>({
+  key:`${id}`,
+  label,
+  icon,
+  onClick: ()=>{setPage(id)}
+}))
+
 return<>
 { 
 isPending ? <p>loading</p>
 :
 isError ? <p>что то пошло не так</p>
 :
-<div style={{display:'flex'}}>
-<Menu onClick={onClick} style={{ width: 200, height: 1000 }} mode="vertical" items={items}/>
-<div style={{width:'100%'}}>
+<Flex>
+<Menu
+style={{ width: 200, height: 1000 }} 
+mode="vertical" 
+items={items}
+/>
+<div>
 <h5>эта страница открывается для авторизованного пользователя</h5>
-{
-    data && <>
-    <p>{data.name}</p>
-    <p>{data.date}</p>
-    </>
-}
-   {
-    page.list ?  
-    <ListAthlete data={data} refetch={refetch}/>
-    :
-    null
-    }
-    {
-    page.schedule ?  
-    <MySchedule/>
-    :
-    null
-    }
+  {
+    arrMenu.map((item:any)=>item.id===page ? <div key={item.id}>{item.path}</div> : null)
+  }
 </div>
-</div>
+</Flex>
 }
-
 </>
 }

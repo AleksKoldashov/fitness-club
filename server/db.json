@@ -1,5 +1,39 @@
 {
-  "user": [],
+  "rates": [
+    {
+      "id": "1",
+      "icon": "https://optim.tildacdn.com/tild3563-3565-4437-b834-643461363464/-/cover/120x120/center/center/-/format/webp/free-icon-diet-14105.png",
+      "title": "Фитнес-ланч",
+      "description": "руб./1 мес.",
+      "time": "Будни 12.00-16.00",
+      "price": 2990
+    },
+    {
+      "id": "2",
+      "icon": "https://optim.tildacdn.com/tild6432-6336-4033-b935-653265373237/-/cover/120x120/center/center/-/format/webp/premium-icon-meditat.png",
+      "title": "Дневное членство 6 мес. + 6 мес.в подарок",
+      "description": "руб./1 мес.",
+      "time": "Будни 8.00-16.00 Выходные 9.00-16.00",
+      "price": 1590
+    },
+    {
+      "id": "3",
+      "icon": "https://optim.tildacdn.com/tild3633-6461-4133-b239-346361376565/-/cover/120x120/center/center/-/format/webp/free-icon-weightlift.png",
+      "title": "Общее членство 6 мес. + 6 мес. в подарок",
+      "description": "руб./1 мес.",
+      "time": "Будни 8.00-22.00 Выходные 9.00-20.00",
+      "price": 1920
+    },
+    {
+      "id": "4",
+      "icon": "https://optim.tildacdn.com/tild3861-6332-4336-a634-336538643565/-/cover/120x120/center/center/-/format/webp/premium-icon-trainer.png",
+      "title": "Семейное  6 мес. + 6 мес. в подарок (на двоих)",
+      "description": "руб./1 мес.",
+      "time": "Будни 8.00-22.00 Выходные 9.00-20.00",
+      "price": 3340
+    }
+  ],
+  "posts": [],
   "athelete": [
     {
       "id": "oNkdG79mQhX9ZDbPbkz2UNZJd2b2",
@@ -11,19 +45,91 @@
       "roles": "athelete",
       "gender": "female",
       "date": "2024-06-27T13:32:06.912Z",
-      "auth": false
+      "auth": false,
+      "myathlete": [],
+      "tasks": []
     },
     {
       "id": "R24kX8ADVeQuSRezOtx5uLu39Qn1",
-      "name": "ben",
-      "lastname": "gur",
+      "name": "Бэн",
+      "lastname": "Гурион",
       "email": "ben@mail.ru",
       "password": "123456",
-      "age": 28,
+      "age": "31",
       "roles": "athelete",
       "gender": "male",
       "date": "2024-06-28T06:40:06.151Z",
-      "auth": false
+      "auth": false,
+      "myathlete": [],
+      "tasks": [
+        {
+          "id": 1720555200000,
+          "day": 10,
+          "month": 6,
+          "year": 2024,
+          "task": []
+        },
+        {
+          "id": 1720641600000,
+          "day": 11,
+          "month": 6,
+          "year": 2024,
+          "task": []
+        },
+        {
+          "id": 1720036800000,
+          "day": 4,
+          "month": 6,
+          "year": 2024,
+          "task": []
+        },
+        {
+          "id": 1720123200000,
+          "day": 5,
+          "month": 6,
+          "year": 2024,
+          "task": [
+            {
+              "idDay": 1720123200000,
+              "time": "9-11",
+              "type": "group",
+              "name": "",
+              "idTask": 81648
+            }
+          ]
+        },
+        {
+          "id": 1719777600000,
+          "day": 1,
+          "month": 6,
+          "year": 2024,
+          "task": [
+            {
+              "idDay": 1719777600000,
+              "time": "12-14",
+              "type": "group",
+              "name": "",
+              "idTask": 84485
+            }
+          ]
+        },
+        {
+          "id": 1719864000000,
+          "day": 2,
+          "month": 6,
+          "year": 2024,
+          "task": [
+            {
+              "idDay": 1719864000000,
+              "time": "12-14",
+              "type": "group",
+              "name": "",
+              "idTask": 72586
+            }
+          ]
+        }
+      ],
+      "foto": "https://upload.wikimedia.org/wikipedia/ru/0/0f/%D0%91%D0%B5%D0%BD-%D0%93%D1%83%D1%80_2016.jpg"
     },
     {
       "id": "fNJxaGfagNZkMi6IqeCITsvDsNr1",
@@ -35,28 +141,201 @@
       "roles": "athelete",
       "gender": "male",
       "date": "2024-06-28T06:41:10.877Z",
-      "auth": false
+      "auth": false,
+      "myathlete": [],
+      "tasks": []
+    },
+    {
+      "id": "r0Kog3KspIRGH5VaBy0Xa1StYIl2",
+      "name": "Денис",
+      "lastname": "",
+      "email": "den@mail.ru",
+      "password": "123456",
+      "age": 0,
+      "roles": "athelete",
+      "gender": "male",
+      "date": "2024-07-03T07:25:37.413Z",
+      "auth": false,
+      "myathlete": [],
+      "tasks": [
+        {
+          "id": 1720555200000,
+          "day": 10,
+          "month": 6,
+          "year": 2024,
+          "task": [
+            {
+              "idDay": 1720555200000,
+              "time": "12-14",
+              "type": "privat",
+              "name": "",
+              "idTask": 14176
+            }
+          ]
+        },
+        {
+          "id": 1719864000000,
+          "day": 2,
+          "month": 6,
+          "year": 2024,
+          "task": [
+            {
+              "idDay": 1719864000000,
+              "time": "9-11",
+              "type": "group",
+              "name": "",
+              "idTask": 43949
+            }
+          ]
+        }
+      ]
     }
   ],
   "trener": [
     {
       "id": "VdGidPn0LDhcl9dEpm8IoNmmWLn2",
-      "name": "ALEXEY",
-      "lastname": "KOLDASHOV",
+      "name": "Aleks",
+      "lastname": "Колдашов",
       "email": "alex@mail.ru",
       "password": "123456",
-      "age": 35,
+      "age": "36",
       "roles": "trener",
       "gender": "male",
       "date": "2024-06-27T13:32:54.602Z",
       "auth": false,
       "myathlete": [
         {
-          "name": "ben",
-          "lastname": "gur",
-          "id": "R24kX8ADVeQuSRezOtx5uLu39Qn1"
+          "name": "Elena",
+          "lastname": "KOLDASHOVA",
+          "id": "oNkdG79mQhX9ZDbPbkz2UNZJd2b2",
+          "label": "Elena",
+          "value": "Elena"
+        },
+        {
+          "name": "bred",
+          "lastname": "pit",
+          "id": "fNJxaGfagNZkMi6IqeCITsvDsNr1",
+          "label": "bred",
+          "value": "bred"
         }
-      ]
+      ],
+      "tasks": [
+        {
+          "id": 1719950400000,
+          "day": 3,
+          "month": 6,
+          "year": 2024,
+          "task": []
+        },
+        {
+          "id": 1720209600000,
+          "day": 6,
+          "month": 6,
+          "year": 2024,
+          "task": [
+            {
+              "idDay": 1720209600000,
+              "time": "9-11",
+              "type": "group",
+              "name": "",
+              "idTask": 10780
+            }
+          ]
+        },
+        {
+          "id": 1720382400000,
+          "day": 8,
+          "month": 6,
+          "year": 2024,
+          "task": [
+            {
+              "idDay": 1720382400000,
+              "time": "12-14",
+              "type": "group",
+              "name": "",
+              "idTask": 61480
+            },
+            {
+              "idDay": 1720382400000,
+              "time": "12-14",
+              "type": "group",
+              "name": "",
+              "idTask": 68552
+            }
+          ]
+        },
+        {
+          "id": 1720468800000,
+          "day": 9,
+          "month": 6,
+          "year": 2024,
+          "task": [
+            {
+              "idDay": 1720468800000,
+              "time": "",
+              "type": "privat",
+              "name": "Elena",
+              "idTask": 79069
+            }
+          ]
+        },
+        {
+          "id": 1720555200000,
+          "day": 10,
+          "month": 6,
+          "year": 2024,
+          "task": []
+        }
+      ],
+      "foto": "https://sun9-3.userapi.com/impf/c847123/v847123535/66abb/gWowX33vKFc.jpg?quality=96&as=32x24,48x36,72x54,108x81,160x120,240x180,360x270,480x360,540x405,640x480,720x540,1080x810,1280x960,1440x1080,2560x1920&sign=0ccdb1e03d97234bf0697de85e16d4f8&from=bu&u=U9JXaWr7ZObaso-FvaeWxZaHWC-nfan8uyIWRqdJ3hc&cs=320x240",
+      "skils": [
+        "{\"value\": \"Кардио\", \"color\":\"orange\"}",
+        "{\"value\": \"Фитнес\", \"color\":\"volcano\"}",
+        " {\"value\": \"Йога\", \"color\":\"blue\"}"
+      ],
+      "rating": {
+        "sum": 22,
+        "count": 7
+      }
+    },
+    {
+      "id": "Pt2kVktrNeWahS3sxk7f4Ry00Y43",
+      "name": "Иван",
+      "lastname": "Иванов",
+      "email": "mail@mail.ru",
+      "password": "123456",
+      "age": "35",
+      "roles": "trener",
+      "gender": "",
+      "date": "2024-07-05T14:21:10.166Z",
+      "auth": false,
+      "myathlete": [
+        {
+          "name": "Денис",
+          "lastname": "",
+          "id": "r0Kog3KspIRGH5VaBy0Xa1StYIl2"
+        },
+        {
+          "name": "bred",
+          "lastname": "pit",
+          "id": "fNJxaGfagNZkMi6IqeCITsvDsNr1"
+        }
+      ],
+      "foto": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzWWwW7Ky-Qi1PesLRIsTDVWL-C4SpOQNlEKNs79MuKh_Rww5poeExqqJrT0DZWALvE1I&usqp=CAU",
+      "tasks": [],
+      "skils": [
+        "{\"value\": \"Пилатес\", \"color\": \"magenta\"}",
+        "{\"value\": \"Фитнес\", \"color\":\"volcano\"}",
+        "{\"value\": \"Кардио\", \"color\":\"orange\"}",
+        "{\"value\": \"Силовые упражнения\", \"color\":\"gold\"}",
+        "{\"value\": \"Бокс\", \"color\":\"lime\"}",
+        " {\"value\": \"Борьба\", \"color\":\"green\"}",
+        " {\"value\": \"Йога\", \"color\":\"blue\"}"
+      ],
+      "rating": {
+        "sum": 12,
+        "count": 3
+      }
     }
   ]
 }

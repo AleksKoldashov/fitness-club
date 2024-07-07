@@ -1,19 +1,18 @@
-import React, { useState } from 'react';
-import type { InputNumberProps } from 'antd';
+import  { useState } from 'react';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import {
   Button,
-  DatePicker,
   Form,
   Input,
   InputNumber,
   Select,
+  Space,
 } from 'antd';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import {  AddUser, addUserAthlete, addUserTrener, postUser } from '../API/apiUser';
-import { FieldType, igender, iobjReg } from '../../types/typeMyForm';
-
-
+import { useMutation} from '@tanstack/react-query';
+import { FieldType, igender} from '../types/typeMyForm';
+import { Idata } from '../types/typePage';
+import { addUserAthlete } from '../components/API/apiAthlete';
+import { addUserTrener } from '../components/API/apiTrener';
 
 const formItemLayout = {
   labelCol: {
@@ -27,13 +26,13 @@ const formItemLayout = {
 };
 
 export default function MyFormRegistr ({role}:any) {
-const client = useQueryClient()
+
 const optionSelect:igender [] = [
     {label: 'выберите пол', value: 'gender', disabled: true},
     {label: 'male', value: 'male', disabled: false},
     {label: 'female', value: 'female', disabled: false}
 ]
- const objReg:iobjReg = {
+ const objReg:Idata = {
     id: '',
     name: '',
     lastname: '',
@@ -44,11 +43,15 @@ const optionSelect:igender [] = [
     gender : '',
     date: new Date(),
     auth: false,
-    myathlete: []
+    myathlete: [],
+    foto: '',
+    tasks: [],
+    skils: [],
+    rating: {sum:0, count:0}
  }
- const [suc, setSuc] = useState(false)
-const [value, setValue] = useState(objReg)
 
+const [suc, setSuc] = useState(false)
+const [value, setValue] = useState(objReg)
 
 const addUser = useMutation({
   mutationFn: ({obj, uid}:any):any=>{
@@ -62,29 +65,27 @@ const addUser = useMutation({
   setSuc(true)
   }
 })
-// .then(({user})=>setValue({...value, id:user.uid}))
-// .catch(console.error)
+
 const onSubmit=()=>{
   const auth = getAuth();
   createUserWithEmailAndPassword(auth, value.email, value.password)
       .then(({user})=>{
           addUser.mutate({obj:value, uid: user.uid})
       })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-      })
+      .catch((console.error)
+      //   (error) => {
+      //   const errorCode = error.code;
+      //   const errorMessage = error.message;
+      // }
+    )
 }  
 
-const onChangeAge: InputNumberProps['onChange'] = (v) => {
+const onChangeAge: any = (v:number) => {
   setValue({...value, age: v })
 };
 const handleChange = (v: string) => {
     setValue({...value, gender: v})
   };
-
-
-console.log(value);
 
  return <Form {...formItemLayout} variant="filled" style={{ maxWidth: 600 }}>
     <Form.Item label="Имя" name="name" rules={[{ required: true, message: 'Пожалуйста укажите имя' }]}>
@@ -150,7 +151,7 @@ console.log(value);
       >
         Зарегестрироватся
       </Button>
-      <p style={{display: suc ? 'block' : 'none'}}>Успешно зарегестрирован</p>
+      <Space style={{display: suc ? 'block' : 'none'}}>Успешно зарегестрирован</Space>
     </Form.Item>
   </Form>
 }
