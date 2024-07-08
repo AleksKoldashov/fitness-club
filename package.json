@@ -1,6 +1,7 @@
 {
   "name": "fitness_club",
   "version": "0.1.0",
+  "homepage": "https://AleksKoldashov.github.io/fitness_club",
   "private": true,
   "dependencies": {
     "@tanstack/react-query": "^5.47.0",
