@@ -24,11 +24,17 @@ export interface IaddMyTask{
 }
 
 export const addUserTrener = async ({obj, uid}:any)=>{
-    const response = await fetch(`http://localhost:3004/trener`,{
-        method: "POST",
+    const response = await fetch(`https://fitness-club-bf646-default-rtdb.europe-west1.firebasedatabase.app/trener/${uid}.json`,{
+        method: "PUT",
         body: JSON.stringify({...obj, id: uid})
     })
-       
+    return response.json() 
+} 
+
+export const getTrenerIdNew = async (obj:any)=>{
+    const response = await fetch(`https://fitness-club-bf646-default-rtdb.europe-west1.firebasedatabase.app/trener.json`,
+      
+    )
     return response.json() 
 } 
 

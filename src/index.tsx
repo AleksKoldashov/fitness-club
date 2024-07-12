@@ -31,52 +31,52 @@ const queryClient = new QueryClient({
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: '/fitness_club',
     element: <App/>,
     errorElement: <ErrorPage/>,
     children: [
       {
-        path: '/home',
+        path: '/fitness_club/home',
         element: <Home/>,
       },
       {
-        path: '/profil',
+        path: '/fitness_club/profil',
         element: <ProfilPage/>,
       },
       {
-        path: '/contacts',
+        path: '/fitness_club/contacts',
         element: <Contacts/>,
       },
       {
-        path: '/rates',
+        path: '/fitness_club/rates',
         element: <Rates/>,
       },
       {
-        path: '/ourteam',
+        path: '/fitness_club/ourteam',
         element: <OurTeam/>,
       },
       {
-        path: '/ourteam/post/:postId',
+        path: '/fitness_club/ourteam/post/:postId',
         element: <Posts/>,
       },
       {
-        path: '/trener/:userId',
+        path: '/fitness_club/trener/:userId',
         element: <TrenerPage/>,
       },
       {
-        path: '/athelete/:userId',
+        path: '/fitness_club/athelete/:userId',
         element: <AthletePage/>
       },
       {
-        path: '/homepromo',
+        path: '/fitness_club/homepromo',
         element: <HomePromo/>,
         children: [
           {
-            path: '/homepromo/promotions',
+            path: '/fitness_club/homepromo/promotions',
             element: <Promotions/>,
           },
           {
-            path: '/homepromo/promotionfriend',
+            path: '/fitness_club/homepromo/promotionfriend',
             element: <PromotionFriend/>,
           },
         ]
