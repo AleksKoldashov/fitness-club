@@ -11,8 +11,7 @@ import {
 import { useMutation} from '@tanstack/react-query';
 import { FieldType, igender} from '../types/typeMyForm';
 import { Idata } from '../types/typePage';
-import { addUserAthlete } from '../components/API/apiAthlete';
-import { addUserTrener } from '../components/API/apiTrener';
+import { addNewUser } from '../components/API/apiUser';
 
 
 const formItemLayout = {
@@ -50,17 +49,12 @@ const optionSelect:igender [] = [
     skils: [],
     rating: {sum:0, count:0}
  }
-
 const [suc, setSuc] = useState(false)
 const [value, setValue] = useState(objReg)
 
 const addUser = useMutation({
   mutationFn: ({obj, uid}:any):any=>{
-   if(role === 'athelete'){
-      addUserAthlete({obj, uid})
-   }else{
-      addUserTrener({obj, uid})
-   }
+      addNewUser({obj, uid, role})
   },
   onSuccess:()=>{
   setSuc(true)

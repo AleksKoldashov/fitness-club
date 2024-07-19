@@ -32,7 +32,6 @@ const [value, setValue] = useState<itask>(
 const addTask = useMutation({
   
   mutationFn: ():any=>{
- 
     if(data.roles==='trener'){
       const a = data.tasks.filter((item:any)=>item.id !== idDay)
       const b = data.tasks.find((item:any)=>item.id === idDay)
@@ -116,7 +115,7 @@ useEffect(()=>{
     setValue={setValue}
     addTask={addTask}
     />
-   {data.tasks?.map((item:any, index:any)=>item.id===idDay
+   {/* {data.tasks?.map((item:any, index:any)=>item.id===idDay
    ?
    <div key={index}>
     <Table 
@@ -126,6 +125,6 @@ useEffect(()=>{
       />
    </div>
    
-   : null)}
+   : null)} */}
     </>
     }
