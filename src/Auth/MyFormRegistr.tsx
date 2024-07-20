@@ -43,7 +43,7 @@ const optionSelect:igender [] = [
     gender : '',
     date: new Date(),
     auth: false,
-    myathlete: [],
+    athelete: [],
     foto: '',
     tasks: [],
     skils: [],

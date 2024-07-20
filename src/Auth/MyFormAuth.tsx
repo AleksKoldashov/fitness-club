@@ -41,7 +41,8 @@ const login=()=>{
   .then(({user})=>{
     nav(`/fitness_club/${role}/${user.uid}`)
     localStorage.setItem('path', `/fitness_club/${role}/${user.uid}`);
-    localStorage.setItem('iduser', `${user.uid}`)
+    localStorage.setItem('iduser', `${user.uid}`);
+    localStorage.setItem('role', `${role}`);
   })
   .catch(console.error)
 }

@@ -17,6 +17,7 @@ import Posts from './components/OurTeam/Posts';
 import Rates from './page/Rates';
 import ProfilPage from './page/ProfilPage';
 import Contacts from './page/Contacts';
+import UserPage from './page/UserPage';
 
 
 
@@ -61,11 +62,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/fitness_club/trener/:userId',
-        element: <TrenerPage/>,
+        element: <UserPage/>,
       },
       {
         path: '/fitness_club/athelete/:userId',
-        element: <AthletePage/>
+        element: <UserPage/>
       },
       {
         path: '/fitness_club/homepromo',

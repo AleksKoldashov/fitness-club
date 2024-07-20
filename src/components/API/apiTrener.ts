@@ -22,6 +22,11 @@ export interface IaddMyTask{
     month: number;
     year: number;
 }
+
+
+
+
+
 //добавляем нового пользователя
 export const addUserTrener = async ({obj, uid}:any)=>{
     const response = await fetch(`https://fitness-club-bf646-default-rtdb.europe-west1.firebasedatabase.app/trener/${uid}.json`,{

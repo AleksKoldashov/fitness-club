@@ -9,34 +9,34 @@ export default function MySchedule ({data}:any) {
 const [togle, setTogle]=useState<any>({tog:true, idDay: ''})
 
 const getListData = (value: Dayjs) => {
-  let listData: { name: string; time: string; type: string; }[] = []; 
-  data.tasks?.forEach((item:any)=>{
-  switch(value.year()){
-    case item.year:
-      switch (value.month()) {
-        case item.month:
-          switch (value.date()){
-                case item.day:
-                  listData = item.task;
-                }
-          break;
-          default:
-  }
-  }
-})
-  return listData || [];
+//   let listData: { name: string; time: string; type: string; }[] = []; 
+//   data.tasks?.forEach((item:any)=>{
+//   switch(value.year()){
+//     case item.year:
+//       switch (value.month()) {
+//         case item.month:
+//           switch (value.date()){
+//                 case item.day:
+//                   listData = item.task;
+//                 }
+//           break;
+//           default:
+//   }
+//   }
+// })
+//   return listData || [];
 };
   const dateCellRender = (value: Dayjs) => {
     const listData = getListData(value);
     return (
       <>
-        {listData.map((item, index) => (
+        {/* {listData.map((item, index) => (
           <Space
           key={index}
           >
             <p>{item.type}</p>
           </Space>
-        ))}
+        ))} */}
       </>
     );
   };
@@ -48,7 +48,6 @@ const getListData = (value: Dayjs) => {
   };
 
   return <>
-
   {
   togle.tog ?
     <Calendar 
