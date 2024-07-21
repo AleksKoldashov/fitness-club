@@ -13,18 +13,18 @@ export default function MenuTopBar () {
   const [current, setCurrent] = useState('mail');
   const avatar = localStorage.getItem('avatar') 
   const pathProfil = localStorage.getItem('path') 
-  const valid = pathProfil ? pathProfil : '/profil'
+  const valid = pathProfil ? pathProfil : '/fitness_club/profil'
   const onClick: MenuProps['onClick'] = (e) => {
     setCurrent(e.key);
   };
 
 const menuHeader = [
-    {id:1, title: 'Главная', path: '/home'},
+    {id:1, title: 'Главная', path: '/fitness_club/home'},
     {id:2, title: 'Профиль', path: `${valid}`},
-    {id:3, title: 'Акции', path: '/homepromo'},
-    {id:4, title: 'Наши тарифы', path: '/rates'},
-    {id:5, title: 'Наша команда', path: '/ourteam'},
-    {id:6, title: 'Контакты', path: '/contacts'},
+    {id:3, title: 'Акции', path: '/fitness_club/homepromo'},
+    {id:4, title: 'Наши тарифы', path: '/fitness_club/rates'},
+    {id:5, title: 'Наша команда', path: '/fitness_club/ourteam'},
+    {id:6, title: 'Контакты', path: '/fitness_club/contacts'},
   ]
 const item = menuHeader.map(({id,title, path})=>{ 
    return {
@@ -52,7 +52,7 @@ const itemsPersonalArea = itemsPersonal.map(({id, label, role})=>({
 
 const outProfil=()=>{
     localStorage.clear()
-    nav('/home')
+    nav('/fitness_club/home')
   }    
     return<>
     <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={item} style={{width:'700px'}}/>

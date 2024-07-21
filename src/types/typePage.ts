@@ -1,5 +1,5 @@
 
-export interface imyathlete {
+export interface imyathelete {
     id: string;
     label: string;
     lastname: string;
@@ -25,7 +25,7 @@ export interface Idata{
     id: string;
     gender: string;
     lastname: string;
-    myathlete: imyathlete[];
+    athelete: imyathelete[];
     name: string;
     password: string;
     roles: string;

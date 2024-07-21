@@ -5,6 +5,25 @@ export interface IresMyAth extends IaddAthlete{
     data: Idata
 }
 
+
+export const addMyAthlete = async ({data, athlete}:any)=>{
+    const response = await fetch(`https://fitness-club-bf646-default-rtdb.europe-west1.firebasedatabase.app/${data.roles}/${data.id}/${athlete.roles}/${athlete.id}.json`,{
+        method: 'PUT',
+        body: JSON.stringify(athlete)
+    })
+    return response.json() 
+}
+
+export const delMyAthlete=async ({data, athlete}:any)=>{
+    const response = await fetch(`https://fitness-club-bf646-default-rtdb.europe-west1.firebasedatabase.app/${data.roles}/${data.id}/${athlete.roles}/${athlete.id}.json`,{
+        method:'DELETE',
+    })
+    return response.json()
+}
+
+
+
+///////////
 export const addUserAthlete = async ({obj, uid}:any)=>{
     const response = await fetch(`http://localhost:3004/athelete`,{
         method: "POST",
@@ -19,32 +38,14 @@ export const getAthleteId = async (obj:any)=>{
     return response.json() 
 } 
 
-export const getAllAthlete = async () =>{
-    const response = await fetch(`http://localhost:3004/athelete`)
-    return response.json()
-}
+// export const getAllAthlete = async () =>{
+//     const response = await fetch(`http://localhost:3004/athelete`)
+//     return response.json()
+// }
 
-export const addMyAthlete = async ({data, name, lastname, id}:IresMyAth) =>{
-    const response = await fetch(`http://localhost:3004/trener/${data.id}`,{
-        method: 'PUT',
-        body: JSON.stringify({...data, myathlete: [...data.myathlete, 
-            {
-                name,
-                lastname,
-                id
-        }
-    ]})
-    })
-    return response.json()
-}
+ 
 
-export const delMyAthlete=async ({data, newArr}:any)=>{
-    const response = await fetch(`http://localhost:3004/trener/${data.id}`,{
-        method:'PUT',
-        body: JSON.stringify({...data, myathlete: newArr})
-    })
-    return response.json()
-}
+
 
 export const addMyTaskA = async ({data, value, idDay,a,b, day, month, year}:IaddMyTask) =>{  
     const response = await fetch(`http://localhost:3004/athelete/${data.id}`,{

@@ -17,6 +17,7 @@ export default function TrenerPage () {
     queryKey: ['trener'], 
     queryFn: ()=>getTrenerId(userId)})
 
+
 localStorage.setItem('avatar', `${data?.foto}`)
   const [page, setPage] = useState<number>(2)
 

@@ -1,4 +1,7 @@
+
+
 export default function Contacts(){
+
 
     return <div className="contacts">
     <h1>Мой телеграмм: @/AlekseyKoldashov</h1>

@@ -39,9 +39,10 @@ const login=()=>{
   const auth = getAuth();
   signInWithEmailAndPassword(auth, value.email, value.password)
   .then(({user})=>{
-    nav(`/${role}/${user.uid}`)
-    localStorage.setItem('path', `/${role}/${user.uid}`);
-    localStorage.setItem('iduser', `${user.uid}`)
+    nav(`/fitness_club/${role}/${user.uid}`)
+    localStorage.setItem('path', `/fitness_club/${role}/${user.uid}`);
+    localStorage.setItem('iduser', `${user.uid}`);
+    localStorage.setItem('role', `${role}`);
   })
   .catch(console.error)
 }

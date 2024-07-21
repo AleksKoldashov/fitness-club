@@ -33,7 +33,18 @@
       "price": 3340
     }
   ],
-  "posts": [],
+  "posts": [
+    {
+      "id": "VdGidPn0LDhcl9dEpm8IoNmmWLn2",
+      "body": "sdsadad",
+      "date": "2024-07-12T07:17:58.985Z"
+    },
+    {
+      "id": "VdGidPn0LDhcl9dEpm8IoNmmWLn2",
+      "body": "ewrrwerwe",
+      "date": "2024-07-12T07:24:56.412Z"
+    }
+  ],
   "athelete": [
     {
       "id": "oNkdG79mQhX9ZDbPbkz2UNZJd2b2",

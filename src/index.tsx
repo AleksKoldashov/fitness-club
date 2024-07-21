@@ -17,6 +17,7 @@ import Posts from './components/OurTeam/Posts';
 import Rates from './page/Rates';
 import ProfilPage from './page/ProfilPage';
 import Contacts from './page/Contacts';
+import UserPage from './page/UserPage';
 
 
 
@@ -31,52 +32,52 @@ const queryClient = new QueryClient({
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: '/fitness_club',
     element: <App/>,
     errorElement: <ErrorPage/>,
     children: [
       {
-        path: '/home',
+        path: '/fitness_club/home',
         element: <Home/>,
       },
       {
-        path: '/profil',
+        path: '/fitness_club/profil',
         element: <ProfilPage/>,
       },
       {
-        path: '/contacts',
+        path: '/fitness_club/contacts',
         element: <Contacts/>,
       },
       {
-        path: '/rates',
+        path: '/fitness_club/rates',
         element: <Rates/>,
       },
       {
-        path: '/ourteam',
+        path: '/fitness_club/ourteam',
         element: <OurTeam/>,
       },
       {
-        path: '/ourteam/post/:postId',
+        path: '/fitness_club/ourteam/post/:postId',
         element: <Posts/>,
       },
       {
-        path: '/trener/:userId',
-        element: <TrenerPage/>,
+        path: '/fitness_club/trener/:userId',
+        element: <UserPage/>,
       },
       {
-        path: '/athelete/:userId',
-        element: <AthletePage/>
+        path: '/fitness_club/athelete/:userId',
+        element: <UserPage/>
       },
       {
-        path: '/homepromo',
+        path: '/fitness_club/homepromo',
         element: <HomePromo/>,
         children: [
           {
-            path: '/homepromo/promotions',
+            path: '/fitness_club/homepromo/promotions',
             element: <Promotions/>,
           },
           {
-            path: '/homepromo/promotionfriend',
+            path: '/fitness_club/homepromo/promotionfriend',
             element: <PromotionFriend/>,
           },
         ]
