@@ -8,6 +8,7 @@ import { getAllAthlete } from '../../API/apiUser';
 import { getDatabase, ref, onValue } from "firebase/database";
 import { database } from '../../../firebase';
 import { useParams } from 'react-router-dom';
+import useMyInput from '../../UI/MyInput';
 
   
 interface IListAthlete {
@@ -21,6 +22,8 @@ const ListAthlete: React.FC<IListAthlete> =({data, refetch})=>{
 
 let { userId } = useParams();
 
+const myfilter=useMyInput();
+
  useEffect(()=>{
     const starCountRef = ref(database, `trener/${userId}`);
     onValue(starCountRef, (snapshot) => {
@@ -29,7 +32,7 @@ let { userId } = useParams();
     }); 
   },[])
 
-const [togle, setTogle]=useState(true)
+const [togle, setTogle]=useState({search: false, data: true})
 const [value, setValue]=useState()
 
 
@@ -50,22 +53,53 @@ const arrayAthletes=(obj:any): any | null=>{
   return arr
 }
 
-const arrayMyAthlete=(obj:any)=>{
-  let arr = []
-  for(let i in obj){
-    arr.push(obj[i])
+
+const searchTogle=()=>{
+  if(togle.data){
+//все спортсмены
+  arrayAthletes(AllAthlete.data)
+  ?
+  setTogle({ ...togle, search: true})
+  :
+  <p>Негде искать</p>
+  }else{
+//только мои
+arrayAthletes(data.athelete)
+  ?
+  setTogle({ ...togle, search: true})
+  :
+  <p>Добавьте спортсменов</p>
   }
-  return arr
 }
 
-console.log(arrayAthletes(AllAthlete.data));
-console.log(data?.athelete);
+const ComponentList=()=>{
+  return<>
+  <List
+          dataSource={arrayAthletes(AllAthlete.data)}
+          renderItem={(athlete:any) => <List.Item>
+            <List.Item.Meta
+            avatar={<Avatar src={athlete.foto}/>}
+            title={<>
+            {athlete.name}
+            &nbsp;
+            {athlete.lastname}
+            </>}
+            />
+            <Button
+            onClick={()=>{addAthlete.mutate(athlete)}}
+            >Добавить себе список</Button>
+            </List.Item>}
+          />
+  </>
+}
+
 
 const addAthlete=useMutation({
   mutationFn: (athlete:any):any=>{
     addMyAthlete({data, athlete})
   }
 })
+console.log(togle);
 
 const delAthlete=useMutation({
   mutationFn: (athlete:any):any=>{
@@ -75,54 +109,52 @@ const delAthlete=useMutation({
 useEffect(()=>{
   refetch()
 },[addAthlete, delAthlete])
-
     return (<>
-    <Button onClick={()=>{setTogle(false)}}>Показать только моих спортсменов</Button>
-    <Button onClick={()=>{setTogle(true)}}>Показать всех</Button>
     {
-      togle 
+      myfilter.input({placeholder: "введите имя для поиска"})
+    }
+    <Button onClick={()=>{searchTogle()}}>Найти</Button>
+    <Button onClick={()=>{setTogle({search: false, data: false})}}>Показать только моих спортсменов</Button>
+    <Button onClick={()=>{setTogle({search: false, data: true})}}>Показать всех</Button>
+    {
+    togle.search 
+    ?
+    <p>результат поиска</p>
+    :
+      togle.data 
       ?
       arrayAthletes(AllAthlete.data) 
-      ?
-      <List
-      dataSource={arrayAthletes(AllAthlete.data)}
-      renderItem={(athlete:any) => <List.Item>
-        <List.Item.Meta
-        avatar={<Avatar src={athlete.foto}/>}
-        title={<>
-        {athlete.name}
-        {athlete.lastname}
-        </>}
-        />
-        <Button
-        onClick={()=>{addAthlete.mutate(athlete)}}
-        >Добавить себе список</Button>
-        </List.Item>}
-      />
-      :
-      <p>спортсменов вообще нет</p>
+          ?
+          ComponentList()
+          :
+          <p>спортсменов вообще нет</p>
       :
       data.athelete 
-      ?
-      <List
-      dataSource={arrayMyAthlete(data.athelete)}
-      renderItem={(athlete:any) => <List.Item>
-        <List.Item.Meta
-        avatar={<Avatar src={athlete.foto}/>}
-        title={<>
-        {athlete.name}
-        {athlete.lastname}
-        </>}
-        />
-        <Button
-        onClick={()=>{delAthlete.mutate(athlete)}}
-        >Удалить</Button>
-        </List.Item>}
-      />
-      :
-      <p>добавте спортсменов</p>
+          ?
+          <List
+          dataSource={arrayAthletes(data.athelete)}
+          renderItem={(athlete:any) => <List.Item>
+            <List.Item.Meta
+            avatar={<Avatar src={athlete.foto}/>}
+            title={<>
+            {athlete.name}
+            &nbsp;
+            {athlete.lastname}
+            </>}
+            />
+            <Button
+            onClick={()=>{delAthlete.mutate(athlete)}}
+            >Удалить</Button>
+            </List.Item>}
+          />
+          :
+          <p>добавте спортсменов</p>
     }
     </>);
 }
+
+
+
+
 
 export default ListAthlete;
