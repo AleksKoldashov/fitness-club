@@ -5,6 +5,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addMyTask, addMyTaskNew, delMyTask, itask } from '../API/apiTrener';
 import { addMyTaskA, addMyTaskNewA, delMyTaskA} from '../API/apiAthlete';
 import TabelForm from './TabelForm';
+import { addTaskQueryes } from '../API/apiUser';
 
 interface DataType {
     time: string;
@@ -21,55 +22,55 @@ const day = new Date(togle.day.format(`MM-DD-YYYY`)).getDate();
 const month = new Date(togle.day.format(`MM-DD-YYYY`)).getMonth();
 const year = new Date(togle.day.format(`MM-DD-YYYY`)).getFullYear();
 
-const [value, setValue] = useState<itask>(
+const [task, setTask] = useState<itask>(
   {
     time: '',
     type: '',
     name:'',
     idTask: 0
   })
-
+console.log(data?.tasks);
 const addTask = useMutation({
-  
   mutationFn: ():any=>{
-    if(data.roles==='trener'){
-      const a = data.tasks.filter((item:any)=>item.id !== idDay)
-      const b = data.tasks.find((item:any)=>item.id === idDay)
-      if(b!==undefined){
-        const idTask = Math.random()*100000
-        addMyTask({data, value:{...value, idTask: Math.floor(idTask)}, idDay,a, b, day, month, year}) 
-      }else{
-        const idTask = Math.random()*100000
-        addMyTaskNew({data, value: {...value, idTask: Math.floor(idTask)}, idDay, day, month, year}) 
-      }
-    }else{
-      const a = data.tasks.filter((item:any)=>item.id !== idDay)
-      const b = data.tasks.find((item:any)=>item.id === idDay)
-      if(b!==undefined){
-        const idTask = Math.random()*100000
-        addMyTaskA({data, value: {...value, idTask: Math.floor(idTask)}, idDay,a, b, day, month, year}) 
-      }else{
-        const idTask = Math.random()*100000
-        addMyTaskNewA({data, value: {...value, idTask: Math.floor(idTask)}, idDay, day, month, year}) 
-      }
-    }
+    addTaskQueryes({data, task, idDay: 'task'})
+    // if(data.roles==='trener'){
+    //   const a = data.tasks.filter((item:any)=>item.id !== idDay)
+    //   const b = data.tasks.find((item:any)=>item.id === idDay)
+    //   if(b!==undefined){
+    //     const idTask = Math.random()*100000
+    //     addMyTask({data, value:{...value, idTask: Math.floor(idTask)}, idDay,a, b, day, month, year}) 
+    //   }else{
+    //     const idTask = Math.random()*100000
+    //     addMyTaskNew({data, value: {...value, idTask: Math.floor(idTask)}, idDay, day, month, year}) 
+    //   }
+    // }else{
+    //   const a = data.tasks.filter((item:any)=>item.id !== idDay)
+    //   const b = data.tasks.find((item:any)=>item.id === idDay)
+    //   if(b!==undefined){
+    //     const idTask = Math.random()*100000
+    //     addMyTaskA({data, value: {...value, idTask: Math.floor(idTask)}, idDay,a, b, day, month, year}) 
+    //   }else{
+    //     const idTask = Math.random()*100000
+    //     addMyTaskNewA({data, value: {...value, idTask: Math.floor(idTask)}, idDay, day, month, year}) 
+    //   }
+    // }
     
   }
 })
 
 const delTask=useMutation({
   mutationFn: (record:any):any=>{
-    if(data.roles==='trener'){
-      let newArr = data.tasks.filter((item:any)=>item.id!==record.idDay)  
-      const Obj = data.tasks.find((item:any)=>item.id===record.idDay)
-      const newObj = Obj.task.filter((item:any)=>item.idTask!==record.idTask)
-      delMyTask({data, newArr, Obj, newObj})
-    }else{
-      let newArr = data.tasks.filter((item:any)=>item.id!==record.idDay)
-      const Obj = data.tasks.find((item:any)=>item.id===record.idDay)
-      const newObj = Obj.task.filter((item:any)=>item.idTask!==record.idTask)
-      delMyTaskA({data, newArr, Obj, newObj})
-    }
+    // if(data.roles==='trener'){
+    //   let newArr = data.tasks.filter((item:any)=>item.id!==record.idDay)  
+    //   const Obj = data.tasks.find((item:any)=>item.id===record.idDay)
+    //   const newObj = Obj.task.filter((item:any)=>item.idTask!==record.idTask)
+    //   delMyTask({data, newArr, Obj, newObj})
+    // }else{
+    //   let newArr = data.tasks.filter((item:any)=>item.id!==record.idDay)
+    //   const Obj = data.tasks.find((item:any)=>item.id===record.idDay)
+    //   const newObj = Obj.task.filter((item:any)=>item.idTask!==record.idTask)
+    //   delMyTaskA({data, newArr, Obj, newObj})
+    // }
   }
 })
 
@@ -111,8 +112,8 @@ useEffect(()=>{
     <Button onClick={()=>{setTogle({tog:true})}}>Back</Button>
     <TabelForm
     data={data}
-    value={value}
-    setValue={setValue}
+    value={task}
+    setValue={setTask}
     addTask={addTask}
     />
    {/* {data.tasks?.map((item:any, index:any)=>item.id===idDay

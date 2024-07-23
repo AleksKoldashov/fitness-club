@@ -3,7 +3,7 @@ import { Card, Space } from 'antd';
 import { NavLink } from "react-router-dom";
 
 export const arrPromo=[
-  {id:1, title: 'Приведи друга', body: 'Приведи друга получи 15% скидку', path: `/homepromo/promotionfriend`},
+  {id:1, title: 'Приведи друга', body: 'Приведи друга получи 15% скидку', path: `/fitness_club/homepromo/promotionfriend`},
   {id:2, title: 'Акция 3+1', body: 'Купи абонемент на 3 месяца получи месяц в подарок'},
   {id:3, title: 'Акция "Почти даром"', body: 'Купи абонемт на год получи скидку 20%'},
 ]

@@ -21,3 +21,11 @@ export const ParseArr=(arr:any)=>{
     }
     return newarr
     }
+
+export const arrayAthletes=(obj:any): any | null=>{
+        let arr = []
+        for(let i in obj){
+          arr.push(obj[i])
+        }
+        return arr
+      }

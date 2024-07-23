@@ -8,6 +8,7 @@ export default function MySchedule ({data}:any) {
 
 const [togle, setTogle]=useState<any>({tog:true, idDay: ''})
 
+
 const getListData = (value: Dayjs) => {
 //   let listData: { name: string; time: string; type: string; }[] = []; 
 //   data.tasks?.forEach((item:any)=>{

@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import {  Button, Flex, List, Input, Space, Avatar} from 'antd';
+import {  Button, Input} from 'antd';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {  addMyAthlete, delMyAthlete} from '../../API/apiAthlete';
-import { IaddAthlete, Idata, imyathelete } from '../../../types/typePage';
-import { SearchProps } from 'antd/es/input';
+import { Idata } from '../../../types/typePage';
 import { getAllAthlete } from '../../API/apiUser';
-import { getDatabase, ref, onValue } from "firebase/database";
+import {  ref, onValue } from "firebase/database";
 import { database } from '../../../firebase';
 import { useParams } from 'react-router-dom';
 import useMyInput from '../../UI/MyInput';
+import { arrayAthletes } from '../../UI/Utilits';
+import ComponentsList from './ComponentsList';
+
+
 
   
 interface IListAthlete {
@@ -44,53 +47,32 @@ const AllAthlete =useQuery({
 if(AllAthlete.isPending){<p>Loading....</p>}
 if(AllAthlete.isError){<p>Error</p>}
 
-
-const arrayAthletes=(obj:any): any | null=>{
-  let arr = []
-  for(let i in obj){
-    arr.push(obj[i])
-  }
-  return arr
+const filterAthlete=(arr:any)=>{
+    const a = arr.filter((item:any)=>item.name.toLowerCase()===myfilter.valueInput.toLowerCase())
+    return a
 }
-
 
 const searchTogle=()=>{
-  if(togle.data){
-//все спортсмены
-  arrayAthletes(AllAthlete.data)
-  ?
-  setTogle({ ...togle, search: true})
-  :
-  <p>Негде искать</p>
+  if(myfilter.valueInput!==''){
+    if(togle.data){
+      //все спортсмены
+        arrayAthletes(AllAthlete.data)
+        ?
+        setTogle({ ...togle, search: true})
+        :
+        <p>Негде искать</p>
+        }else{
+      //только мои
+      arrayAthletes(data.athelete)
+        ?
+        setTogle({ ...togle, search: true})
+        :
+        <p>Добавьте спортсменов</p>
+        }
   }else{
-//только мои
-arrayAthletes(data.athelete)
-  ?
-  setTogle({ ...togle, search: true})
-  :
-  <p>Добавьте спортсменов</p>
+    alert('поле поиска не должно быть пустым')
   }
-}
-
-const ComponentList=()=>{
-  return<>
-  <List
-          dataSource={arrayAthletes(AllAthlete.data)}
-          renderItem={(athlete:any) => <List.Item>
-            <List.Item.Meta
-            avatar={<Avatar src={athlete.foto}/>}
-            title={<>
-            {athlete.name}
-            &nbsp;
-            {athlete.lastname}
-            </>}
-            />
-            <Button
-            onClick={()=>{addAthlete.mutate(athlete)}}
-            >Добавить себе список</Button>
-            </List.Item>}
-          />
-  </>
+ 
 }
 
 
@@ -109,52 +91,38 @@ const delAthlete=useMutation({
 useEffect(()=>{
   refetch()
 },[addAthlete, delAthlete])
+
     return (<>
     {
       myfilter.input({placeholder: "введите имя для поиска"})
     }
-    <Button onClick={()=>{searchTogle()}}>Найти</Button>
+    <Button onClick={()=>{searchTogle()}}>Найти по имени</Button>
     <Button onClick={()=>{setTogle({search: false, data: false})}}>Показать только моих спортсменов</Button>
     <Button onClick={()=>{setTogle({search: false, data: true})}}>Показать всех</Button>
     {
-    togle.search 
-    ?
-    <p>результат поиска</p>
-    :
       togle.data 
       ?
       arrayAthletes(AllAthlete.data) 
           ?
-          ComponentList()
+          togle.search
+          ?
+          ComponentsList({data: filterAthlete(arrayAthletes(AllAthlete.data)), funmut: addAthlete, btntitle: 'Добавить себе список'})
+          :
+          ComponentsList({data: AllAthlete.data, funmut: addAthlete, btntitle: 'Добавить себе список'})
           :
           <p>спортсменов вообще нет</p>
       :
       data.athelete 
-          ?
-          <List
-          dataSource={arrayAthletes(data.athelete)}
-          renderItem={(athlete:any) => <List.Item>
-            <List.Item.Meta
-            avatar={<Avatar src={athlete.foto}/>}
-            title={<>
-            {athlete.name}
-            &nbsp;
-            {athlete.lastname}
-            </>}
-            />
-            <Button
-            onClick={()=>{delAthlete.mutate(athlete)}}
-            >Удалить</Button>
-            </List.Item>}
-          />
+        ?
+        togle.search
+        ?
+        ComponentsList({data: filterAthlete(arrayAthletes(data.athelete)), funmut: delAthlete, btntitle: 'Удалить из списка'})
+        :
+        ComponentsList({data: data.athelete, funmut: delAthlete, btntitle: 'Удалить из списка'})
           :
           <p>добавте спортсменов</p>
     }
     </>);
 }
-
-
-
-
 
 export default ListAthlete;
