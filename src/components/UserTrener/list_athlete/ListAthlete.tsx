@@ -1,9 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import {  Button, Flex, List, Input, Space} from 'antd';
+import {  Button, Input} from 'antd';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import {  addMyAthlete, delMyAthlete, getAllAthlete } from '../../API/apiAthlete';
-import { IaddAthlete, Idata, imyathlete } from '../../../types/typePage';
-import { SearchProps } from 'antd/es/input';
+import {  addMyAthlete, delMyAthlete} from '../../API/apiAthlete';
+import { Idata } from '../../../types/typePage';
+import { getAllAthlete } from '../../API/apiUser';
+import {  ref, onValue } from "firebase/database";
+import { database } from '../../../firebase';
+import { useParams } from 'react-router-dom';
+import useMyInput from '../../UI/MyInput';
+import { arrayAthletes } from '../../UI/Utilits';
+import ComponentsList from './ComponentsList';
+
+
 
   
 interface IListAthlete {
@@ -14,100 +22,107 @@ interface IListAthlete {
 const { Search } = Input;
 
 const ListAthlete: React.FC<IListAthlete> =({data, refetch})=>{
- const queryClient = useQueryClient()
 
+let { userId } = useParams();
 
-const [togle, setTogle] = useState(false);
+const myfilter=useMyInput();
+
+ useEffect(()=>{
+    const starCountRef = ref(database, `trener/${userId}`);
+    onValue(starCountRef, (snapshot) => {
+      const data = snapshot.val();
+      setValue(data); 
+    }); 
+  },[])
+
+const [togle, setTogle]=useState({search: false, data: true})
+const [value, setValue]=useState()
+
 
 const AllAthlete =useQuery({
     queryKey: ['AllAthlete'],
     queryFn: getAllAthlete,
-    enabled: togle
   })
- 
-const addAthlete =useMutation({
-  mutationFn:({name, lastname, id}: IaddAthlete):any=>{
-    const search = data.myathlete.find((item:imyathlete)=>item.id === id)
-    if(!search){
-      addMyAthlete({data, name, lastname, id})
-    }
-  },
-  onSuccess: ()=>{
-    queryClient.invalidateQueries({queryKey:['trener']})
-  }
-})
-
-const deleteAthlete=useMutation({
-  mutationFn:(id:any):any=>{
-    const newArr=data.myathlete.filter((item:any)=>item.id!==id)
-    delMyAthlete({data, newArr})
-  }
-})
-
-const [valueSearch, setValueSearch]=useState([])
-
-const onSearch: SearchProps['onSearch'] = (value, _e, info) =>{ 
-  const newArr=AllAthlete.data.filter((item:any)=>item.name.toLowerCase()===value.toLowerCase())
-  setValueSearch(newArr)
-}
-
-const showAllAthlete =()=>{
-  setTogle(true)
-}
-
-const onlyMy =()=>{
-  setTogle(false)
-}
-
-useEffect(()=>{
-  refetch()
-},[addAthlete, refetch, deleteAthlete])
 
 if(AllAthlete.isPending){<p>Loading....</p>}
 if(AllAthlete.isError){<p>Error</p>}
-    return (
-        <List
-          header={<div>
-            <h3>Список спортсменов</h3>
-            <Space direction='vertical'>
-              <Space>
-                <Button onClick={()=>showAllAthlete()}>Показать всех спортсменов</Button>
-                <Button onClick={()=>onlyMy()}>Показать только моих</Button>
-              </Space>
-                <Search placeholder="input search text" onSearch={onSearch} style={{ width: 200 }} />
-            </Space>
-            </div>}
-          className="demo-loadmore-list"
-          // loading={initLoading}
-          itemLayout="horizontal"
-          // loadMore={loadMore}
-          dataSource={
-            togle ?
-            valueSearch.length>0 
-            ?
-            valueSearch
-            : 
-            AllAthlete.data
-            :
-            data.myathlete
-          }
-          renderItem={(item:any) => <List.Item
-          >
-            <Flex>{item.name} {item.lastname}</Flex>
-          
-           { 
-            togle
-            ?
-            <Button onClick={()=>{addAthlete.mutate({name:item.name, lastname: item.lastname, id: item.id})}}>Добавить себе</Button>
-            :
-            <>
-            <Button onClick={()=>{}}>Назначить занятие</Button>
-            <Button onClick={()=>{deleteAthlete.mutate(item.id)}}>Удалить</Button>
-            </>
-            }
-            </List.Item>} 
-        />
-      );
+
+const filterAthlete=(arr:any)=>{
+    const a = arr.filter((item:any)=>item.name.toLowerCase()===myfilter.valueInput.toLowerCase())
+    return a
+}
+
+const searchTogle=()=>{
+  if(myfilter.valueInput!==''){
+    if(togle.data){
+      //все спортсмены
+        arrayAthletes(AllAthlete.data)
+        ?
+        setTogle({ ...togle, search: true})
+        :
+        <p>Негде искать</p>
+        }else{
+      //только мои
+      arrayAthletes(data.athelete)
+        ?
+        setTogle({ ...togle, search: true})
+        :
+        <p>Добавьте спортсменов</p>
+        }
+  }else{
+    alert('поле поиска не должно быть пустым')
+  }
+ 
+}
+
+
+const addAthlete=useMutation({
+  mutationFn: (athlete:any):any=>{
+    addMyAthlete({data, athlete})
+  }
+})
+console.log(togle);
+
+const delAthlete=useMutation({
+  mutationFn: (athlete:any):any=>{
+   delMyAthlete({data, athlete})
+  }
+})
+useEffect(()=>{
+  refetch()
+},[addAthlete, delAthlete])
+
+    return (<>
+    {
+      myfilter.input({placeholder: "введите имя для поиска"})
+    }
+    <Button onClick={()=>{searchTogle()}}>Найти по имени</Button>
+    <Button onClick={()=>{setTogle({search: false, data: false})}}>Показать только моих спортсменов</Button>
+    <Button onClick={()=>{setTogle({search: false, data: true})}}>Показать всех</Button>
+    {
+      togle.data 
+      ?
+      arrayAthletes(AllAthlete.data) 
+          ?
+          togle.search
+          ?
+          ComponentsList({data: filterAthlete(arrayAthletes(AllAthlete.data)), funmut: addAthlete, btntitle: 'Добавить себе список'})
+          :
+          ComponentsList({data: AllAthlete.data, funmut: addAthlete, btntitle: 'Добавить себе список'})
+          :
+          <p>спортсменов вообще нет</p>
+      :
+      data.athelete 
+        ?
+        togle.search
+        ?
+        ComponentsList({data: filterAthlete(arrayAthletes(data.athelete)), funmut: delAthlete, btntitle: 'Удалить из списка'})
+        :
+        ComponentsList({data: data.athelete, funmut: delAthlete, btntitle: 'Удалить из списка'})
+          :
+          <p>добавте спортсменов</p>
+    }
+    </>);
 }
 
 export default ListAthlete;

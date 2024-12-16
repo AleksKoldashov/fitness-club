@@ -47,7 +47,7 @@ const OurTeam: React.FC=()=>{
                     <div>
                         <Rating item={item} refetch={refetch}/>
                     </div>
-                   <NavLink to={`/ourteam/post/${item.id}`}>Посмотреть отзывы</NavLink>
+                   <NavLink to={`/fitness_club/ourteam/post/${item.id}`}>Посмотреть отзывы</NavLink>
                 </div>   
             </div>
            

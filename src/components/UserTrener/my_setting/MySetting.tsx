@@ -6,11 +6,14 @@ import { DownloadOutlined } from '@ant-design/icons';
 import { Button, } from 'antd';
 import { message, Popconfirm } from 'antd';
 import type { PopconfirmProps } from 'antd';
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { putAddFoto, putNewName, putSkils, removeUser } from "../../API/apiTrener";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getTrenerId, putAddFoto, putNewName, putSkils, removeUser } from "../../API/apiTrener";
 import { getAuth, deleteUser, signInWithEmailAndPassword } from "firebase/auth";
 import useMyInput from "../../UI/MyInput";
 import { ParseArr } from "../../UI/Utilits";
+import { getDatabase, ref, set,  onValue  } from "firebase/database";
+import { database } from "../../../firebase";
+import { useParams } from "react-router-dom";
 
 interface Iseting {
     data: Idata;
@@ -20,8 +23,25 @@ interface Iseting {
 
 
 const MySetting: React.FC<Iseting>=({data, refetch})=>{
-const queryClient = useQueryClient()
+// const {userId} = useParams()
+// console.log(userId);
+// const {data,isPending, isError, refetch} = useQuery({
+//     queryKey: ['trener'], 
+//     queryFn: ()=>getTrenerId(userId)})
 
+const queryClient = useQueryClient()
+const [newData, setNewData] = useState()
+
+const Ref = ref(database, 'trener/'+data.id)
+
+useEffect(()=>{
+    onValue(Ref, (snapshot) => {
+        const data = snapshot.val();
+        setNewData(data);
+        refetch()
+      });
+   
+},[])
 
 const newname=useMyInput()
 const newlastname=useMyInput()
@@ -75,8 +95,9 @@ const cancel: PopconfirmProps['onCancel'] = (e) => {
     message.error('Click on No');
   };
 
-const fn1=(e:any)=>{
+const fn1=(e:any)=>{  
 if(e.key==='Enter'){
+    // e.preventDefault();
     changeName.mutate()
 }
 }
@@ -140,8 +161,8 @@ useEffect(()=>{
             </Button>
         </Popconfirm>
     </Flex>
-    {
-        data && <div className="profil_setting">
+    {   
+       data && <div className="profil_setting">
             <h3 onDoubleClick={()=>{}}>{data.name}</h3>
             {newname.input({placeholder:"mysite", onKeyUp: (e:any)=>{fn1(e)}})}
             <h3>{data.lastname}</h3>

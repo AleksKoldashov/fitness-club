@@ -8,7 +8,7 @@ function App() {
 const nav = useNavigate()
 
 useEffect(()=>{
-  nav('/home')
+  nav('/fitness_club/home')
 },[nav])
 
   return (
